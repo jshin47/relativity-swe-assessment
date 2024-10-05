@@ -1,0 +1,15 @@
+﻿services:
+  webapi:
+    image: webapi
+    build:
+      context: .
+      dockerfile: dotnet6-postgresql-crud-application/Dockerfile
+  postgres:
+    image: postgres
+    ports:
+      - 5432
+  webapi-1:
+    image: webapi-1
+    build:
+      context: .
+      dockerfile: dotnet6-postgresql-crud-application/Dockerfile
