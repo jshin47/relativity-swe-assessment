@@ -21,6 +21,7 @@ Note: The database will be automatically dropped and populated from the `netflix
 
 ```
 cd client
+npm install
 npm start
 ```
 
