@@ -149,6 +149,16 @@ namespace WebApi.Services
             _context.SaveChanges();
         }
 
+        public List<string> GetAllRatings()
+        {
+            return _context.Shows.Select(x => x.Rating).Distinct().ToList();
+        }
+
+        public List<string> GetAllCountries()
+        {
+            return _context.Shows.Select(x => x.Country).Distinct().ToList();
+        }
+
         // helper methods
 
         private Show getShow(int id)

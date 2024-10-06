@@ -28,6 +28,9 @@ class CreateShowComponent extends Component {
   }
   0;
   componentDidMount() {
+
+    // TODO: Run these concurrently instead of sequentially using Promise.all
+
     // Retrieve the list of categories
 
     ShowCategoryService.getShowCategories().then((res) => {
@@ -35,6 +38,20 @@ class CreateShowComponent extends Component {
         allShowCategories: res.data.map((x) => ({ value: x, label: x })),
       });
     });
+
+    ShowService.getShowRatings().then((res) => {
+      this.setState({
+        allShowRatings: res.data.map((x) => ({ value: x, label: x })),
+      });
+    });
+
+    ShowService.getShowCountries().then((res) => {
+      this.setState({
+        allShowCountries: res.data.map((x) => ({ value: x, label: x })),
+      });
+    });
+
+    // Retrieve the list of ratings
 
     if (this.state.id === "_add") {
       return;
@@ -168,18 +185,23 @@ class CreateShowComponent extends Component {
                       }
                     />
                   </div>
+
                   <div className="form-group">
                     <label> Rating: </label>
-                    <input
-                      placeholder="Rating"
+                    <CreatableSelect
                       name="rating"
-                      className="form-control"
-                      value={this.state.rating}
-                      onChange={(e) =>
-                        this.setState({ rating: e.target.value })
+                      options={this.state.allShowRatings}
+                      className="basic-select"
+                      classNamePrefix="select"
+                      value={{label: this.state.rating, value: this.state.rating}}
+                      onChange={(v) =>
+                        this.setState({
+                          rating: v.value,
+                        })
                       }
                     />
                   </div>
+
                   <div className="form-group">
                     <label> Duration: </label>
                     <input

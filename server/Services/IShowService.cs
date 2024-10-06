@@ -11,5 +11,8 @@ public interface IShowService
     void CreateMany(List<ShowCsvRowDto> csvRows);
     void Update(int id, UpdateShowRequestDto model);
     void Delete(int id);
+
+    List<string> GetAllRatings();
+    List<string> GetAllCountries();
 }
 

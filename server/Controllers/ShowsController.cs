@@ -27,6 +27,20 @@ public class ShowsController : ControllerBase
         return Ok(Shows);
     }
 
+    [HttpGet("countries")]
+    public IActionResult GetAllCountries()
+    {
+        var countries = _ShowService.GetAllCountries();
+        return Ok(countries);
+    }
+    
+    [HttpGet("ratings")]
+    public IActionResult GetAllRatings()
+    {
+        var ratings = _ShowService.GetAllRatings();
+        return Ok(ratings);
+    }
+    
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {

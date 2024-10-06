@@ -114,31 +114,41 @@ class ListShowComponent extends Component {
               title: "Listed In",
               isSortable: true,
               isFilterable: true,
+              cell: (row) => (
+                <span>{row.categories.join(', ')}</span>
+              ),
             },
             {
               prop: "actions",
+              title: 'Movie Actions',
+              thProps: {
+                style: {
+                  minWidth: '160px',
+                }
+              },
               cell: (row) => (
                 <div>
                   <button
+                    style={{ marginLeft: "10px", fontSize: "small", padding: "2px" }}
                     onClick={() => this.editShow(row.id)}
                     className="btn btn-primary"
                   >
-                    Update
+                    Edit
                   </button>
                   <button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", fontSize: "small", padding: "2px" }}
                     onClick={() => this.deleteShow(row.id)}
                     className="btn btn-danger"
                   >
-                    Delete
+                    Del
                   </button>
-                  <button
-                    style={{ marginLeft: "10px" }}
+                  {/* <button
+                    style={{ marginLeft: "10px", fontSize: "small", padding: "2px" }}
                     onClick={() => this.viewShow(row.id)}
                     className="btn btn-info"
                   >
                     View
-                  </button>
+                  </button> */}
                 </div>
               ),
             },
