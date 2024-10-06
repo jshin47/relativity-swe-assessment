@@ -157,12 +157,12 @@ namespace WebApi.Services
 
         public List<string> GetAllRatings()
         {
-            return _context.Shows.Select(x => x.Rating).Distinct().ToList();
+            return _context.Shows.Select(x => x.Rating).Distinct().OrderBy(x => x).ToList();
         }
 
         public List<string> GetAllCountries()
         {
-            return _context.Shows.Select(x => x.Country).Distinct().ToList();
+            return _context.Shows.Select(x => x.Country).Distinct().OrderBy(x => x).ToList();
         }
 
         // helper methods
@@ -170,7 +170,7 @@ namespace WebApi.Services
         private Show getShow(int id)
         {
             var show = _context.Shows.Include(x => x.ShowCategories).Single(x => x.Id == id);
-            if (show == null) throw new KeyNotFoundException("User not found");
+            if (show == null) throw new KeyNotFoundException("Show not found");
             return show;
         }
     }
