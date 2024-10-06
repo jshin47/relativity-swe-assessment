@@ -51,7 +51,7 @@ For mapping classes to classes by convention (typically, DTO classes to and from
 
 ### `react-bs-datatable` for data table listing shows
 
-I used `react-bs-datatable` because it already implemented client-side paging, sorting, and filtering. The `DatatableWrapper` component in `clients/src/components/ListShowComponent.jsx` includes configuration under the `headers` prop for which columns are displayed.
+I used `react-bs-datatable` because it already implemented paging, sorting, and filtering. The `DatatableWrapper` component in `clients/src/components/ListShowComponent.jsx` includes configuration under the `headers` prop for which columns are displayed.
 
 ### `react-select` for autocomplete inputs
 
