@@ -28,9 +28,6 @@ class CreateShowComponent extends Component {
   }
   
   componentDidMount() {
-
-    // TODO: Run these concurrently instead of sequentially using Promise.all
-
     // Retrieve the list of categories
 
     Promise.all(

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Models;
 using WebApi.Models.Shows;
 
 namespace WebApi.Services
@@ -24,6 +26,23 @@ namespace WebApi.Services
             var shows = _context.Shows.Include(x => x.ShowCategories);
             var dtos = _mapper.Map<IEnumerable<ShowDto>>(shows);
             return dtos;
+        }
+
+        public PaginatedList<ShowDto> GetAll(int pageIndex, int pageSize)
+        {
+            var dtos = _mapper.Map<IEnumerable<ShowDto>>(
+                _context.Shows
+                    .Include(x => x.ShowCategories)
+                    .OrderBy(b => b.Id)
+                    .Skip((pageIndex - 1) * pageSize)
+                    .Take(pageSize)
+                ).ToList();
+
+            var count = _context.Shows.Count();
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            return new PaginatedList<ShowDto>(dtos, pageIndex, totalPages);
+
         }
 
         public ShowDto GetById(int id)

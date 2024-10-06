@@ -4,8 +4,8 @@ const SHOW_API_BASE_URL = "http://localhost:9080/api/v1/shows";
 
 class ShowService {
 
-    getShows(){
-        return axios.get(SHOW_API_BASE_URL);
+    getShows(pageIndex){
+        return axios.get(`${SHOW_API_BASE_URL}?pageIndex=${pageIndex}`);
     }
 
     createShow(show){

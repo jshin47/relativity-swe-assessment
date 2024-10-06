@@ -25,9 +25,7 @@ class ListShowComponent extends Component {
 
   deleteShow(id) {
     ShowService.deleteShow(id).then((res) => {
-      this.setState({
-        shows: this.state.shows.filter((show) => show.id !== id),
-      });
+      this.getShows(this.state.pageIndex);
     });
   }
   editShow(id) {
@@ -35,11 +33,19 @@ class ListShowComponent extends Component {
   }
 
   componentDidMount() {
-    ShowService.getShows().then((res) => {
+    this.getShows(1);
+  }
+
+  getShows(pageIndex = this.state.pageIndex) {
+    ShowService.getShows(pageIndex).then((res) => {
       if (res.data == null) {
         this.props.history.push("/add-show/_add");
       }
-      this.setState({ shows: res.data });
+      this.setState({ 
+        shows: res.data.items,
+        pageIndex: res.data.pageIndex,
+        totalPages: res.data.totalPages,
+      });
     });
   }
 
@@ -177,7 +183,13 @@ class ListShowComponent extends Component {
               lg={4}
               className="d-flex flex-col justify-content-end align-items-end"
             >
-              <Pagination alwaysShowPagination paginationRange={3} />
+              <Pagination alwaysShowPagination paginationRange={5} controlledProps={{
+                currentPage: this.state.pageIndex,
+                maxPage: this.state.totalPages,
+                onPaginationChange: (pageIndex) => {
+                  this.getShows(pageIndex)
+                },
+              }} />
             </Col>
             <Col xs={12} className="mt-2">
               <BulkCheckboxControl />

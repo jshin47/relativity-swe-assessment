@@ -21,9 +21,9 @@ public class ShowsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult GetAll(int pageIndex = 1, int pageSize = 10)
     {
-        var Shows = _ShowService.GetAll();
+        var Shows = _ShowService.GetAll(pageIndex, pageSize);
         return Ok(Shows);
     }
 
