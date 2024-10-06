@@ -26,7 +26,6 @@ function App() {
                           <Route path = "/view-user/:id" component = {ViewUserComponent}></Route>
                     </Switch>
                 </div>
-              <FooterComponent />
         </Router>
     </div>
     
