@@ -54,7 +54,9 @@ class ListShowComponent extends Component {
             <div>
                 <h2 className="text-center">Shows List</h2>
                 <div className = "row">
-                    <button className="btn btn-primary" onClick={this.addShow}> Add Show</button>
+                    <div className='col-md-12'>
+                        <button className="btn btn-primary" onClick={this.addShow}> Add Show</button>
+                    </div>
                  </div>
                 <DatatableWrapper
                     body={this.state.shows}

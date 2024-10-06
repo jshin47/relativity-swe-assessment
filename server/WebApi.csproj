@@ -12,9 +12,4 @@
 		<PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Content Include="..\.dockerignore">
-	    <Link>.dockerignore</Link>
-	  </Content>
-	</ItemGroup>
 </Project>
