@@ -1,5 +1,15 @@
 import React, { Component } from 'react'
 import ShowService from '../services/ShowService'
+import {
+    DatatableWrapper,
+    Filter,
+    Pagination,
+    PaginationOptions,
+    BulkCheckboxControl,
+    TableBody,
+    TableHeader
+  } from 'react-bs-datatable';
+import { Col, Row, Table } from 'react-bootstrap';
 
 class ListShowComponent extends Component {
     constructor(props) {
@@ -25,7 +35,7 @@ class ListShowComponent extends Component {
         this.props.history.push(`/add-show/${id}`);
     }
 
-  componentDidMount(){
+    componentDidMount(){
         ShowService.getShows().then((res) => {
             if(res.data==null)
             {
@@ -42,55 +52,118 @@ class ListShowComponent extends Component {
     render() {
         return (
             <div>
-                 <h2 className="text-center">Shows List</h2>
-                 <div className = "row">
+                <h2 className="text-center">Shows List</h2>
+                <div className = "row">
                     <button className="btn btn-primary" onClick={this.addShow}> Add Show</button>
                  </div>
-                 <br></br>
-                 <div className = "row">
-                        <table className = "table table-striped table-bordered">
-
-                            <thead>
-                                <tr>
-                                    <th> Type</th>
-                                    <th> Title</th>
-                                    <th> Director</th>
-                                    <th> Country</th>
-                                    <th> Date Added</th>
-                                    <th> Release Year</th>
-                                    <th> Rating</th>
-                                    <th> Duration</th>
-                                    <th> Listed In</th>
-                                    <th> Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.state.shows.map(
-                                        show => 
-                                        <tr key = {show.id}>
-                                            <td> {show.type}</td>
-                                            <td> {show.title}</td>
-                                            <td> {show.director}</td>
-                                            <td> {show.country}</td>
-                                            <td> {show.dateAdded}</td>
-                                            <td> {show.releaseYear}</td>
-                                            <td> {show.rating}</td>
-                                            <td> {show.duration}</td>
-                                            <td> {show.categories.join(', ')}</td>
-                                             <td>
-                                                 <button onClick={ () => this.editShow(show.id)} className="btn btn-info">Update </button>
-                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.deleteShow(show.id)} className="btn btn-danger">Delete </button>
-                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.viewShow(show.id)} className="btn btn-info">View </button>
-                                             </td>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table>
-
-                 </div>
-
+                <DatatableWrapper
+                    body={this.state.shows}
+                    headers={[   
+                        {
+                            prop: 'type',
+                            title: 'Type',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'title',
+                            title: 'Title',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'director',
+                            title: 'Director',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'country',
+                            title: 'Country',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'dateAdded',
+                            title: 'Date Added',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'releaseYear',
+                            title: 'Release Year',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'duration',
+                            title: 'Duration',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'categories',
+                            title: 'Listed In',
+                            isSortable: true,
+                            isFilterable: true
+                        },
+                        {
+                            prop: 'actions',
+                            cell: (row) => (
+                            <div>
+                                <button onClick={ () => this.editShow(row.id)} className="btn btn-info">Update </button>
+                                <button style={{marginLeft: "10px"}} onClick={ () => this.deleteShow(row.id)} className="btn btn-danger">Delete </button>
+                                <button style={{marginLeft: "10px"}} onClick={ () => this.viewShow(row.id)} className="btn btn-info">View </button>
+                            </div>
+                            )
+                        }
+                    ]}
+                    sortProps={{
+                    sortValueObj: {
+                        date: (date) =>
+                        `${date}`
+                    }
+                    }}
+                    paginationOptionsProps={{
+                    initialState: {
+                        rowsPerPage: 10,
+                        options: [5, 10, 15, 20]
+                    }
+                    }}
+                >
+                    <Row className="mb-4">
+                    <Col
+                        xs={12}
+                        lg={4}
+                        className="d-flex flex-col justify-content-end align-items-end"
+                    >
+                        <Filter />
+                    </Col>
+                    <Col
+                        xs={12}
+                        sm={6}
+                        lg={4}
+                        className="d-flex flex-col justify-content-lg-center align-items-center justify-content-sm-start mb-2 mb-sm-0"
+                    >
+                        <PaginationOptions alwaysShowPagination />
+                    </Col>
+                    <Col
+                        xs={12}
+                        sm={6}
+                        lg={4}
+                        className="d-flex flex-col justify-content-end align-items-end"
+                    >
+                        <Pagination alwaysShowPagination paginationRange={3} />
+                    </Col>
+                    <Col xs={12} className="mt-2">
+                        <BulkCheckboxControl />
+                    </Col>
+                    </Row>
+                    <Table>
+                    <TableHeader />
+                    <TableBody />
+                    </Table>
+                </DatatableWrapper>
             </div>
         )
     }
