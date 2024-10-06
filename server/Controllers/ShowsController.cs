@@ -21,7 +21,6 @@ public class ShowsController : ControllerBase
     }
 
     [HttpGet]
-    [OutputCache]
     public IActionResult GetAll()
     {
         var Shows = _ShowService.GetAll();

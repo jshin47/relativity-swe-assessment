@@ -45,7 +45,7 @@ var app = builder.Build();
 
     // Adds a user-friendly default error handler.
     app.UseMiddleware<ErrorHandlerMiddleware>();
-    app.UseOutputCache();
+    
     // Adds controller middleware
     app.MapControllers();
 }
