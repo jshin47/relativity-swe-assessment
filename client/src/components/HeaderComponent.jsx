@@ -1,26 +1,28 @@
-import React, { Component } from 'react'
-import'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class HeaderComponent extends Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props);
 
-        this.state = {
-                 
-        }
-    }
+    this.state = {};
+  }
 
-    render() {
-        return (
+  render() {
+    return (
+      <div>
+        <header>
+          <nav className="navbar navbar-dark bg-primary">
             <div>
-                <header>
-                    <nav className="navbar navbar-dark bg-primary">
-                    <div><a href="/users" className="navbar-brand">SWE Technical Assignment</a></div>
-                    </nav>
-                </header>
+              <a href="/users" className="navbar-brand">
+                SWE Technical Assignment
+              </a>
             </div>
-        )
-    }
+          </nav>
+        </header>
+      </div>
+    );
+  }
 }
 
-export default HeaderComponent
+export default HeaderComponent;
