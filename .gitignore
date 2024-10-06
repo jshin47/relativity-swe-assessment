@@ -2,3 +2,5 @@ client/node_modules
 **/bin
 **/obj
 .idea
+.DS_Store
+Folder.DotSettings.user

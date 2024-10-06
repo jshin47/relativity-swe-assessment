@@ -77,7 +77,7 @@ class ListShowComponent extends Component {
                                             <td> {show.releaseYear}</td>
                                             <td> {show.rating}</td>
                                             <td> {show.duration}</td>
-                                            <td> {show.listedIn}</td>
+                                            <td> {show.categories.join(', ')}</td>
                                              <td>
                                                  <button onClick={ () => this.editShow(show.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteShow(show.id)} className="btn btn-danger">Delete </button>
