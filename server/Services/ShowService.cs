@@ -68,19 +68,31 @@ namespace WebApi.Services
             }
         }
         
-        
-
         public void CreateMany(List<ShowCsvRowDto> csvRows)
         {
+            // This is dangerous because the shows to create may not fit in memory, but for now let's ignore it.
+
+            var showsToCreate = new List<CreateShowRequestDto>();
+            
+            // Build a set of all categories that need to be created.
+            
             var categories = new HashSet<string>();
             
             foreach (var csvRow in csvRows)
             {
+                var show = _mapper.Map<CreateShowRequestDto>(csvRow);
+                
                 foreach (var category in csvRow.ShowCategorysCsv.Split(","))
                 {
-                    categories.Add(category.Trim());
+                    var cat = category.Trim();
+                    categories.Add(cat);
+                    show.Categories.Add(cat);
                 }
+                
+                showsToCreate.Add(show);
             }
+            
+            // Create all categories before attempting to create shows.
 
             foreach (var category in categories)
             {
@@ -96,15 +108,10 @@ namespace WebApi.Services
             
             _context.SaveChanges();
             
-            foreach (var csvRow in csvRows)
+            // Create the shows
+            
+            foreach (var show in showsToCreate)
             {
-                var show = _mapper.Map<CreateShowRequestDto>(csvRow);
-
-                foreach (var category in csvRow.ShowCategorysCsv.Split(","))
-                {
-                    show.Categories.Add(category.Trim());
-                }
-                
                 Create(show, false);
             }
             
@@ -118,7 +125,6 @@ namespace WebApi.Services
             
             // Clear existing categories
             show.ShowCategories.Clear();
-            _context.SaveChanges();
             
             // Create categories as needed and add them to show
             foreach (var category in model.Categories)

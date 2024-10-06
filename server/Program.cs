@@ -29,7 +29,6 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     // Configure services used by controllers
-    services.AddScoped<IUserService, UserService>();
     services.AddScoped<IShowService, ShowService>();
     services.AddScoped<IShowCategoryService, ShowCategoryService>();
 }

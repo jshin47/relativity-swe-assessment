@@ -17,7 +17,7 @@ cd server
 dotnet run
 ```
 
-Note: The database will be automatically dropped and populated from the `netflix1.csv` file every time you restart the server.
+Note: The database will be automatically dropped and populated from the `netflix1.csv` file every time you restart the server. This operation can take a minute or so.
 
 ## Client
 

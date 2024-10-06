@@ -26,30 +26,32 @@ class CreateShowComponent extends Component {
     };
     this.saveOrUpdateShow = this.saveOrUpdateShow.bind(this);
   }
-  0;
+  
   componentDidMount() {
 
     // TODO: Run these concurrently instead of sequentially using Promise.all
 
     // Retrieve the list of categories
 
-    ShowCategoryService.getShowCategories().then((res) => {
-      this.setState({
-        allShowCategories: res.data.map((x) => ({ value: x, label: x })),
-      });
-    });
-
-    ShowService.getShowRatings().then((res) => {
-      this.setState({
-        allShowRatings: res.data.map((x) => ({ value: x, label: x })),
-      });
-    });
-
-    ShowService.getShowCountries().then((res) => {
-      this.setState({
-        allShowCountries: res.data.map((x) => ({ value: x, label: x })),
-      });
-    });
+    Promise.all(
+      [
+        ShowCategoryService.getShowCategories().then((res) => {
+          this.setState({
+            allShowCategories: res.data.map((x) => ({ value: x, label: x })),
+          });
+        }),
+        ShowService.getShowRatings().then((res) => {
+          this.setState({
+            allShowRatings: res.data.map((x) => ({ value: x, label: x })),
+          });
+        }),
+        ShowService.getShowCountries().then((res) => {
+          this.setState({
+            allShowCountries: res.data.map((x) => ({ value: x, label: x })),
+          });
+        }),
+      ]
+    )
 
     // Retrieve the list of ratings
 
@@ -101,14 +103,7 @@ class CreateShowComponent extends Component {
   cancel() {
     this.props.history.push("/shows");
   }
-
-  getTitle() {
-    if (this.state.id === "_add") {
-      return <h3 className="text-center">Add Show</h3>;
-    } else {
-      return <h3 className="text-center">Update Show</h3>;
-    }
-  }
+  
   render() {
     return (
       <div>
@@ -116,7 +111,7 @@ class CreateShowComponent extends Component {
         <div className="container">
           <div className="row">
             <div className="card col-md-6 offset-md-3 offset-md-3">
-              {this.getTitle()}
+            <h3 className="text-center">{(this.state.id === '_add') ? 'Add' : 'Update'} Show</h3>
               <div className="card-body">
                 <form>
                   <div className="form-group">
@@ -155,13 +150,16 @@ class CreateShowComponent extends Component {
                   </div>
                   <div className="form-group">
                     <label> Country: </label>
-                    <input
-                      placeholder="Country"
-                      name="country"
-                      className="form-control"
-                      value={this.state.country}
-                      onChange={(e) =>
-                        this.setState({ country: e.target.value })
+                    <CreatableSelect
+                      name="rating"
+                      options={this.state.allShowCountries}
+                      className="basic-select"
+                      classNamePrefix="select"
+                      value={{label: this.state.country, value: this.state.country}}
+                      onChange={(v) =>
+                        this.setState({
+                          country: v.value,
+                        })
                       }
                     />
                   </div>
@@ -180,6 +178,7 @@ class CreateShowComponent extends Component {
                       name="releaseYear"
                       className="form-control"
                       value={this.state.releaseYear}
+                      type="number"
                       onChange={(e) =>
                         this.setState({ releaseYear: e.target.value })
                       }

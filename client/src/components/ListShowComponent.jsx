@@ -30,9 +30,6 @@ class ListShowComponent extends Component {
       });
     });
   }
-  viewShow(id) {
-    this.props.history.push(`/view-show/${id}`);
-  }
   editShow(id) {
     this.props.history.push(`/add-show/${id}`);
   }
@@ -142,13 +139,6 @@ class ListShowComponent extends Component {
                   >
                     Del
                   </button>
-                  {/* <button
-                    style={{ marginLeft: "10px", fontSize: "small", padding: "2px" }}
-                    onClick={() => this.viewShow(row.id)}
-                    className="btn btn-info"
-                  >
-                    View
-                  </button> */}
                 </div>
               ),
             },
